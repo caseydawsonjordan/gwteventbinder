@@ -32,8 +32,8 @@ import java.util.List;
 public abstract class AbstractEventBinder<T> implements EventBinder<T> {
 
   @Override
-  public final HandlerRegistration bindEventHandlers(T target, EventBus eventBus) {
-    final List<HandlerRegistration> registrations = doBindEventHandlers(target, eventBus);
+  public final HandlerRegistration bindEventHandlers(T target, EventBus eventBus, Class<? extends GenericEvent> ofType) {
+    final List<HandlerRegistration> registrations = doBindEventHandlers(target, eventBus, ofType);
     return new HandlerRegistration() {
       @Override
       public void removeHandler() {
@@ -49,7 +49,7 @@ public abstract class AbstractEventBinder<T> implements EventBinder<T> {
    * Implemented by EventBinderGenerator to do the actual work of binding event handlers on the
    * target.
    */
-  protected abstract List<HandlerRegistration> doBindEventHandlers(T target, EventBus eventBus);
+  protected abstract List<HandlerRegistration> doBindEventHandlers(T target, EventBus eventBus, Class type);
 
   /**
    * Registers the given handler for the given event class on the given event bus. Factored out
@@ -59,8 +59,11 @@ public abstract class AbstractEventBinder<T> implements EventBinder<T> {
   protected final <U extends GenericEvent> void bind(
       EventBus eventBus,
       List<HandlerRegistration> registrations,
+      Class mustExtend,
       Class<U> type,
       GenericEventHandler handler) {
-    registrations.add(eventBus.addHandler(GenericEventType.getTypeOf(type), handler));
+    if(handler implements mustExtend) {
+      registrations.add(eventBus.addHandler(GenericEventType.getTypeOf(type), handler));
+    }
   }
 }

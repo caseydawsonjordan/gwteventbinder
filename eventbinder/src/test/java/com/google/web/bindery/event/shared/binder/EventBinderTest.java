@@ -38,7 +38,7 @@ public class EventBinderTest extends GWTTestCase {
     EventBus eventBus = new SimpleEventBus();
     TestPresenter presenter = new TestPresenter();
     TestPresenter.MyEventBinder binder = GWT.create(TestPresenter.MyEventBinder.class);
-    binder.bindEventHandlers(presenter, eventBus);
+    binder.bindEventHandlers(presenter, eventBus, GenericEvent.class);
 
     // Test one event
     assertEquals(0, presenter.firstEventsHandled);
@@ -59,7 +59,7 @@ public class EventBinderTest extends GWTTestCase {
     EventBus eventBus = new SimpleEventBus();
     TestPresenter presenter = new TestPresenter();
     TestPresenter.MyEventBinder binder = GWT.create(TestPresenter.MyEventBinder.class);
-    HandlerRegistration registration = binder.bindEventHandlers(presenter, eventBus);
+    HandlerRegistration registration = binder.bindEventHandlers(presenter, eventBus, GenericEvent.class);
     assertEquals(0, presenter.firstEventsHandled);
     assertEquals(0, presenter.firstEventsWithoutParameterHandled);
     assertEquals(0, presenter.secondEventsHandled);
@@ -82,7 +82,7 @@ public class EventBinderTest extends GWTTestCase {
     assertEquals(2, presenter.firstAndSecondEventsHandled);
 
     // After re-registering
-    binder.bindEventHandlers(presenter, eventBus);
+    binder.bindEventHandlers(presenter, eventBus, GenericEvent.class);
     eventBus.fireEvent(new FirstEvent());
     eventBus.fireEvent(new SecondEvent());
     assertEquals(2, presenter.firstEventsHandled);
@@ -96,7 +96,7 @@ public class EventBinderTest extends GWTTestCase {
         new com.google.gwt.event.shared.SimpleEventBus();
     TestPresenter presenter = new TestPresenter();
     TestPresenter.MyEventBinder binder = GWT.create(TestPresenter.MyEventBinder.class);
-    binder.bindEventHandlers(presenter, eventBus);
+    binder.bindEventHandlers(presenter, eventBus, GenericEvent.class);
 
     assertEquals(0, presenter.firstEventsHandled);
     eventBus.fireEvent(new FirstEvent());
@@ -107,7 +107,7 @@ public class EventBinderTest extends GWTTestCase {
     EventBus eventBus = new SimpleEventBus();
     SubPresenter presenter = new SubPresenter();
     SubPresenter.MyEventBinder binder = GWT.create(SubPresenter.MyEventBinder.class);
-    binder.bindEventHandlers(presenter, eventBus);
+    binder.bindEventHandlers(presenter, eventBus, GenericEvent.class);
 
     eventBus.fireEvent(new FirstEvent());
     eventBus.fireEvent(new SecondEvent());
@@ -134,7 +134,7 @@ public class EventBinderTest extends GWTTestCase {
     EventBus eventBus = new SimpleEventBus();
     TestPresenter presenter = new TestPresenter();
     SomeActivity.SomeEventBinder binder = GWT.create(SomeActivity.SomeEventBinder.class);
-    binder.bindEventHandlers(presenter, eventBus);
+    binder.bindEventHandlers(presenter, eventBus, GenericEvent.class);
 
     // Test one event
     assertEquals(0, presenter.firstEventsHandled);

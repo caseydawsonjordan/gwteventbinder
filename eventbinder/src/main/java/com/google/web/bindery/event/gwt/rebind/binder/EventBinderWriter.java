@@ -61,7 +61,7 @@ class EventBinderWriter {
 
   private void writeBindMethodHeader(SourceWriter writer, String targetName) {
     writer.println("protected List<HandlerRegistration> doBindEventHandlers("
-        + "final %s target, EventBus eventBus) {",
+        + "final %s target, EventBus eventBus, Class ofType) {",
         targetName);
     writer.indent();
     writer.println(
@@ -102,7 +102,7 @@ class EventBinderWriter {
     }
 
     for (String eventType : eventTypes) {
-      writer.println("bind(eventBus, registrations, %s.class, new GenericEventHandler() {",
+      writer.println("bind(eventBus, registrations,mustExtend, %s.class, new GenericEventHandler() {",
           eventType);
       if (eventParameter != null) {
         writer.indentln("public void handleEvent(GenericEvent event) { target.%s((%s) event); }",

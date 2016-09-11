@@ -62,5 +62,5 @@ public interface EventBinder<T> {
    * @return a registration that can be used to unbind all handlers registered
    *        via this call
    */
-  public HandlerRegistration bindEventHandlers(T target, EventBus eventBus);
+  public HandlerRegistration bindEventHandlers(T target, EventBus eventBus, Class<? extends GenericEvent> type);
 }
